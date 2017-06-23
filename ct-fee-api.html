@@ -1,34 +1,45 @@
 <link rel="import" href="../polymer/polymer.html">
-
-<!--
-`ct-fee-api`
-API for fee management
-
-@demo demo/index.html
--->
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
 
 <dom-module id="ct-fee-api">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
+    <iron-ajax id="getFeeData"></iron-ajax>
+    <iron-ajax id="updateFees"></iron-ajax>
   </template>
 
   <script>
-    Polymer({
+      Polymer({
+          is: 'ct-fee-api',
+          behaviors: [CT.Behaviours.ApiProvider],
 
-      is: 'ct-fee-api',
+          /**
+           * Get fee data
+           *
+           * @returns {Promise}
+           */
+          getFeeData: function(key) {
+              this.$.getFeeData.url = this._url('/settings/category/fees/' + key);
+              return this._generateRequest(this.$.getFeeData);
+          },
 
-      properties: {
-        prop1: {
-          type: String,
-          value: 'ct-fee-api',
-        },
-      },
+          /**
+           * Update fees
+           *
+           * @returns {Promise}
+           */
 
-    });
+          updateFees: function(key) {
+              this.$.updateFees.url = this._url('/settings/category/fees/' + key );
+              this.$.updateFees.method = 'PUT';
+              this.$.updateFees.contentType = "application/json";
+              this.$.updateFees.body = params;
+              return this._generateRequest(this.$.updateFees);
+          },
+
+
+
+
+      });
   </script>
 </dom-module>
