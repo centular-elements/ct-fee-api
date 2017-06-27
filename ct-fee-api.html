@@ -14,23 +14,24 @@
           behaviors: [CT.Behaviours.ApiProvider],
 
           /**
-           * Get fee data
+           * Get a user by id
            *
            * @returns {Promise}
            */
-          getFeeData: function(key) {
-              this.$.getFeeData.url = this._url('/settings/category/fees/' + key);
+          getFeeData: function() {
+              this.$.getFeeData.url = this._url('/settings/category/');
               return this._generateRequest(this.$.getFeeData);
           },
 
           /**
            * Update fees
            *
+           *
            * @returns {Promise}
            */
 
-          updateFees: function(key) {
-              this.$.updateFees.url = this._url('/settings/category/fees/' + key );
+          updateFees: function() {
+              this.$.updateFees.url = this._url('/settings/category/');
               this.$.updateFees.method = 'PUT';
               this.$.updateFees.contentType = "application/json";
               this.$.updateFees.body = params;
